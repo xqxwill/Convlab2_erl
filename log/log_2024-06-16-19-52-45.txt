@@ -1,0 +1,10 @@
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 0, value, loss 1984.5611987816178
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 0, policy, loss -0.02229781103599208
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 1, value, loss 1962.7736921926623
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 1, policy, loss -0.05760188408384114
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 2, value, loss 1930.6230191924283
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 2, policy, loss -0.05955635615920574
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 3, value, loss 1884.7115584458827
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 3, policy, loss -0.06513168073711038
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 4, value, loss 1823.1139584879702
+DEBUG:root:<<dialog policy ppo>> epoch 0, iteration 4, policy, loss -0.06398139831576344
