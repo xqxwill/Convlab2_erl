@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # PPO
 
 A policy optimization method in policy based reinforcement learning that uses
@@ -32,3 +33,6 @@ Note that the *.pol.mdl* suffix should not appear in the --load_path argument.
   year={2017}
 }
 ```
+=======
+# Convlab2_erl
+>>>>>>> 73e4dde91a6461439b3b1a04b1866dc7b8581c74
