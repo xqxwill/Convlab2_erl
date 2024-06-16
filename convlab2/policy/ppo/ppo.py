@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import time
+
 import torch
 from torch import optim
 import numpy as np
@@ -116,7 +118,37 @@ class PPO(Policy):
         # get estimated V(s) and PI_old(s, a)
         # actually, PI_old(s, a) can be saved when interacting with env, so as to save the time of one forward elapsed
         # v: [b, 1] => [b]
+        torch.set_printoptions(threshold=np.inf)
+        time.sleep(2)
+        print("up-(1)")
+        """save s -------------------"""
+        with open("/home/x/P/ConvLab-2/mylog/ppo/s.txt", "w") as file:
+            file.write(str(s))
+        print("s.shape::::{}".format(s.shape))
+        """--------------------------"""
+        """save a -------------------"""
+        with open("/home/x/P/ConvLab-2/mylog/ppo/a.txt", "w") as file:
+            file.write(str(a))
+        print("a.shape::::{}".format(a.shape))
+        """--------------------------"""
+        """save r -------------------"""
+        with open("/home/x/P/ConvLab-2/mylog/ppo/r.txt", "w") as file:
+            file.write(str(r))
+        print("r.shape::::{}".format(r.shape))
+        """--------------------------"""
+        """save mask -------------------"""
+        with open("/home/x/P/ConvLab-2/mylog/ppo/mask.txt", "w") as file:
+            file.write(str(mask))
+        print("mask.shape::::{}".format(mask.shape))
+        """--------------------------"""
         v = self.value(s).squeeze(-1).detach()
+        with open("/home/x/P/ConvLab-2/mylog/ppo/v_0.txt", "w") as file:
+            file.write(str(self.value(s)))
+        print("v_0.shape::::{}".format(self.value(s).shape))
+        print("v.shape::::{}".format(v.shape))
+        torch.set_printoptions(threshold=np.inf)
+        with open("/home/x/P/ConvLab-2/mylog/ppo/v.txt", "w") as file:
+            file.write(str(v))
         log_pi_old_sa = self.policy.get_log_prob(s, a).detach()
         
         # estimate advantage and v_target according to GAE and Bellman Equation
@@ -194,6 +226,9 @@ class PPO(Policy):
 
         if (epoch+1) % self.save_per_epoch == 0:
             self.save(self.save_dir, epoch)
+        print("saved ++++++++++++++++++++++++++++++++++++++++++++")
+        time.sleep(2)
+
     
     def save(self, directory, epoch):
         if not os.path.exists(directory):
