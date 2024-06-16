@@ -1,0 +1,16 @@
+s.shape::::torch.Size([1537, 340])
+a.shape::::torch.Size([1537, 209])
+r.shape::::torch.Size([1537])
+mask.shape::::torch.Size([1537])
+v_0.shape::::torch.Size([1537, 1])
+v.shape::::torch.Size([1537])
+log_[i_old_sa.shape::::torch.Size([1537, 1])
+A_sa.shape::::torch.Size([1537])
+v_target.shape::::torch.Size([1537])
+perm.shape::torch.Size([1537])
+s_shuf.shape::::torch.Size([1537, 340])
+s_shuf.type::::<class 'torch.Tensor'>
+optim_chunk_num:::49
+s_shuf.type::::<class 'tuple'>
+a_shuf.type::::<class 'tuple'>
+a_shuf.type::::<class 'tuple'>

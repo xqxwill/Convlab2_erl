@@ -150,20 +150,44 @@ class PPO(Policy):
         with open("/home/x/P/ConvLab-2/mylog/ppo/v.txt", "w") as file:
             file.write(str(v))
         log_pi_old_sa = self.policy.get_log_prob(s, a).detach()
-        
+        """save log_pi_old_sa -------"""
+        with open("/home/x/P/ConvLab-2/mylog/ppo/log_pi_old_sa.txt", "w") as file:
+            file.write(str(log_pi_old_sa))
+        print("log_[i_old_sa.shape::::{}".format(log_pi_old_sa.shape))
+        """--------------------------"""
         # estimate advantage and v_target according to GAE and Bellman Equation
         A_sa, v_target = self.est_adv(r, v, mask)
-        
-        for i in range(self.update_round):
-
+        """save A_sa, v_target -------"""
+        with open("/home/x/P/ConvLab-2/mylog/ppo/A_sa.txt", "w") as file:
+            file.write(str(A_sa))
+        print("A_sa.shape::::{}".format(A_sa.shape))
+        with open("/home/x/P/ConvLab-2/mylog/ppo/v_target.txt", "w") as file:
+            file.write(str(v_target))
+        print("v_target.shape::::{}".format(v_target.shape))
+        """--------------------------"""
+        # for i in range(self.update_round):
+        for i in range(1):
+            """update_round = 5"""
             # 1. shuffle current batch
             perm = torch.randperm(batchsz)
+            "torch.randperm(n) 函数用于生成一个从 0 到 n-1 的随机排列的整数序列"
+            with open("/home/x/P/ConvLab-2/mylog/ppo/perm.txt", "w") as file:
+                file.write(str(perm))
+            print("perm.shape::{}".format(perm.shape))
             # shuffle the variable for mutliple optimize
             v_target_shuf, A_sa_shuf, s_shuf, a_shuf, log_pi_old_sa_shuf = v_target[perm], A_sa[perm], s[perm], a[perm], \
                                                                            log_pi_old_sa[perm]
+            """save s_shuf ------------------------------"""
+            with open("/home/x/P/ConvLab-2/mylog/ppo/s_shuf.txt", "w") as file:
+                file.write(str(s_shuf))
+            print("s_shuf.shape::::{}".format(s_shuf.shape))
+            print("s_shuf.type::::{}".format(type(s_shuf)))
 
+            """------------------------------------------"""
             # 2. get mini-batch for optimizing
             optim_chunk_num = int(np.ceil(batchsz / self.optim_batchsz))
+            "np.ceil: 向上取整      batchsz:原始batch大小,随机      optim_batchsz:32"
+            print("optim_chunk_num:::{}".format(optim_chunk_num))
             # chunk the optim_batch for total batch
             v_target_shuf, A_sa_shuf, s_shuf, a_shuf, log_pi_old_sa_shuf = torch.chunk(v_target_shuf, optim_chunk_num), \
                                                                            torch.chunk(A_sa_shuf, optim_chunk_num), \
@@ -171,6 +195,19 @@ class PPO(Policy):
                                                                            torch.chunk(a_shuf, optim_chunk_num), \
                                                                            torch.chunk(log_pi_old_sa_shuf,
                                                                                        optim_chunk_num)
+            """save s_shuf_mini ------------------------------"""
+            with open("/home/x/P/ConvLab-2/mylog/ppo/s_shuf_mini.txt", "w") as file:
+                file.write(str(s_shuf))
+            print("s_shuf_mini.type::::{}".format(type(s_shuf)))
+            with open("/home/x/P/ConvLab-2/mylog/ppo/v_target_shuf_mini.txt", "w") as file:
+                file.write(str(v_target_shuf))
+            with open("/home/x/P/ConvLab-2/mylog/ppo/a_shuf_mini.txt", "w") as file:
+                file.write(str(a_shuf))
+            print("a_shuf.type::::{}".format(type(a_shuf)))
+            with open("/home/x/P/ConvLab-2/mylog/ppo/log_pi_old_sa_shuf_mini.txt", "w") as file:
+                file.write(str(log_pi_old_sa_shuf))
+            print("log_pi_old_sa_shuf.type::::{}".format(type(log_pi_old_sa_shuf)))
+            """------------------------------------------"""
             # 3. iterate all mini-batch to optimize
             policy_loss, value_loss = 0., 0.
             for v_target_b, A_sa_b, s_b, a_b, log_pi_old_sa_b in zip(v_target_shuf, A_sa_shuf, s_shuf, a_shuf,
